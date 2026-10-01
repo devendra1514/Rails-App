@@ -17,6 +17,12 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Background processing with Sidekiq [https://github.com/sidekiq/sidekiq]
+gem "sidekiq"
+
+# Redis gem required for Action Cable's Redis adapter [https://github.com/redis/redis-rb]
+gem "redis"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
