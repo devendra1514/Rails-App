@@ -23,6 +23,9 @@ gem "sidekiq"
 # Redis gem required for Action Cable's Redis adapter [https://github.com/redis/redis-rb]
 gem "redis"
 
+# Periodic / Cron jobs for Sidekiq [https://github.com/sidekiq-cron/sidekiq-cron]
+gem "sidekiq-cron"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

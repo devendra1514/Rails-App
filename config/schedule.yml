@@ -1,0 +1,17 @@
+# Sidekiq-Cron Schedule Configuration
+# Define periodic/recurring background jobs here.
+#
+# Syntax:
+#   job_name:
+#     cron: "cron_expression"  # e.g., "*/5 * * * *" (every 5 mins), "0 0 * * *" (daily midnight)
+#     class: "JobClassName"    # e.g., "HardWorker" or "DailyCleanupJob"
+#     queue: "default"         # optional, defaults to default
+#     args: []                 # optional arguments to pass to perform
+#     description: "Summary"   # optional description shown in Sidekiq Web UI
+#
+# Example:
+# sample_cleanup_job:
+#   cron: "0 2 * * *"
+#   class: "SampleCleanupJob"
+#   queue: "low"
+#   description: "Runs daily at 2:00 AM UTC"
