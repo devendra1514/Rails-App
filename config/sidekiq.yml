@@ -1,4 +1,4 @@
-:concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 5) %>
+:concurrency: <%= ENV["SIDEKIQ_CONCURRENCY"].presence || ENV.fetch("RAILS_MAX_THREADS", 5) %>
 :queues:
   - ["critical", 3]
   - ["default", 2]
@@ -6,10 +6,10 @@
   - ["low", 1]
 
 development:
-  :concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 5) %>
+  :concurrency: <%= ENV["SIDEKIQ_CONCURRENCY"].presence || ENV.fetch("RAILS_MAX_THREADS", 5) %>
 
 test:
   :concurrency: 1
 
 production:
-  :concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 10) %>
+  :concurrency: <%= ENV["SIDEKIQ_CONCURRENCY"].presence || ENV.fetch("RAILS_MAX_THREADS", 5) %>
