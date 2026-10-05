@@ -35,8 +35,11 @@ module App
     # Set application timezone to UTC
     config.time_zone = "UTC"
 
-    # Don't generate system test files.
-    config.generators.system_tests = nil
+    # Configure RSpec as the default test framework
+    config.generators do |g|
+      g.test_framework :rspec
+      g.system_tests nil
+    end
 
     # Use Sidekiq as the backend queue adapter for Active Job
     config.active_job.queue_adapter = :sidekiq
