@@ -26,6 +26,9 @@ gem "redis"
 # Periodic / Cron jobs for Sidekiq [https://github.com/sidekiq-cron/sidekiq-cron]
 gem "sidekiq-cron"
 
+# Handle Cross-Origin Resource Sharing (CORS) for API clients [https://github.com/cyu/rack-cors]
+gem "rack-cors"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
