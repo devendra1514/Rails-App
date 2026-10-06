@@ -88,7 +88,7 @@ class AppConfig
 
     def load_yaml(path)
       rendered = ERB.new(File.read(path)).result
-      (YAML.safe_load(rendered, permitted_classes: [Symbol, Date, Time], aliases: true) || {}).deep_symbolize_keys
+      (YAML.safe_load(rendered, permitted_classes: [ Symbol, Date, Time ], aliases: true) || {}).deep_symbolize_keys
     end
   end
 end
