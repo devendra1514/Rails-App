@@ -15,3 +15,4 @@
 #   class: "SampleCleanupJob"
 #   queue: "low"
 #   description: "Runs daily at 2:00 AM UTC"
+{}
