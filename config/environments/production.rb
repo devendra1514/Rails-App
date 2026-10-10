@@ -59,19 +59,21 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates (password resets, confirmations).
   config.action_mailer.default_url_options = {
-    host: Rails.application.credentials.dig(:smtp, :domain) || ENV["APP_HOST"] || "example.com",
+    host: Rails.application.credentials.dig(:smtp, :domain),
     protocol: "https"
   }
 
   # Outgoing SMTP server settings reading from credentials.
   config.action_mailer.smtp_settings = {
-    address:              Rails.application.credentials.dig(:smtp, :address) || "smtp.sendgrid.net",
-    port:                 Rails.application.credentials.dig(:smtp, :port) || 587,
-    domain:               Rails.application.credentials.dig(:smtp, :domain) || "example.com",
+    address:              Rails.application.credentials.dig(:smtp, :address),
+    port:                 Rails.application.credentials.dig(:smtp, :port),
+    domain:               Rails.application.credentials.dig(:smtp, :domain),
     user_name:            Rails.application.credentials.dig(:smtp, :user_name),
     password:             Rails.application.credentials.dig(:smtp, :password),
-    authentication:       Rails.application.credentials.dig(:smtp, :authentication) || :plain,
-    enable_starttls_auto: true
+    authentication:       Rails.application.credentials.dig(:smtp, :authentication),
+    enable_starttls_auto: true,
+    open_timeout:         5,
+    read_timeout:         5
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

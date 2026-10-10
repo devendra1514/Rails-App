@@ -43,5 +43,8 @@ module App
 
     # Use Sidekiq as the backend queue adapter for Active Job
     config.active_job.queue_adapter = :sidekiq
+
+    # Route background email delivery jobs to the dedicated :mailers queue
+    config.action_mailer.deliver_later_queue_name = :mailers
   end
 end
