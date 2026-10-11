@@ -53,6 +53,9 @@ gem "aws-sdk-s3", require: false
 # Catch unsafe migrations in development and CI, set lock timeouts in production [https://github.com/ankane/strong_migrations]
 gem "strong_migrations"
 
+# Fast, lightweight pagination [https://github.com/ddnexus/pagy]
+gem "pagy"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
