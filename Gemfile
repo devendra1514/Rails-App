@@ -50,6 +50,9 @@ gem "image_processing", "~> 1.2"
 # Store files in AWS S3 or S3-compatible cloud storage [https://github.com/aws/aws-sdk-ruby]
 gem "aws-sdk-s3", require: false
 
+# Catch unsafe migrations in development and CI, set lock timeouts in production [https://github.com/ankane/strong_migrations]
+gem "strong_migrations"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
