@@ -82,4 +82,13 @@ Rails.application.configure do
   config.to_prepare do
     AppConfig.reload!
   end
+
+  # Auto-detect N+1 queries during local development
+  config.after_initialize do
+    if defined?(Prosopite)
+      Prosopite.rails_logger = true
+      Prosopite.prosopite_logger = true
+      Prosopite.raise = false
+    end
+  end
 end

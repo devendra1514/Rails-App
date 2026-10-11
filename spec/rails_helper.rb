@@ -76,4 +76,15 @@ RSpec.configure do |config|
 
   # Disable Rack::Attack by default in test suite
   Rack::Attack.enabled = false
+
+  # Auto-detect N+1 queries in tests via Prosopite
+  if defined?(Prosopite)
+    config.before(:each) do |example|
+      Prosopite.scan unless example.metadata[:prosopite] == false
+    end
+
+    config.after(:each) do |example|
+      Prosopite.finish unless example.metadata[:prosopite] == false
+    end
+  end
 end

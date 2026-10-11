@@ -75,6 +75,11 @@ group :development, :test do
   # Testing framework & fixtures
   gem "rspec-rails", "~> 7.1"
   gem "factory_bot_rails"
+
+  # Detect N+1 queries in development and test [https://github.com/charkost/prosopite]
+  gem "prosopite"
+  # PostgreSQL AST parser for accurate Prosopite query fingerprinting [https://github.com/pganalyze/pg_query]
+  gem "pg_query"
 end
 
 group :test do
