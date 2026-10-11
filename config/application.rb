@@ -35,9 +35,10 @@ module App
     # Set application timezone to UTC
     config.time_zone = "UTC"
 
-    # Configure RSpec as the default test framework
+    # Configure RSpec and FactoryBot as default generator tools
     config.generators do |g|
-      g.test_framework :rspec
+      g.test_framework :rspec, fixture: false
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
       g.system_tests nil
     end
 
