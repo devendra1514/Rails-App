@@ -11,3 +11,7 @@ database:
 
 mailer:
   sender_email: "support@example.com"
+
+cors:
+  allowed_origins: "*"
+

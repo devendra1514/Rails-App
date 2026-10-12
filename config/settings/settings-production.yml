@@ -26,3 +26,8 @@ aws:
   region: <%= ENV["AWS_REGION"].presence || Rails.application&.credentials&.dig(:aws, :region) || "us-east-1" %>
   bucket: <%= ENV["AWS_BUCKET"].presence || Rails.application&.credentials&.dig(:aws, :bucket) %>
   endpoint: <%= ENV["AWS_ENDPOINT"].presence || Rails.application&.credentials&.dig(:aws, :endpoint) %>
+
+cors:
+  allowed_origins:
+    - "https://example.com"
+

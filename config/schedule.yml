@@ -1,4 +1,7 @@
 # Sidekiq-Cron Schedule Configuration
+# NOTE: Sidekiq-Cron v2.x natively auto-loads this file on server startup via
+# Sidekiq::Cron::ScheduleLoader. No manual loader code is required in config/initializers/sidekiq.rb.
+#
 # Define periodic/recurring background jobs here.
 #
 # Syntax:
