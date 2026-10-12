@@ -22,7 +22,7 @@ Rails.application.configure do
   # config.asset_host = "http://assets.example.com"
 
   # Store uploaded files on cloud storage in production (see config/storage.yml).
-  config.active_storage.service = :amazon
+  config.active_storage.service = AppConfig.dig(:aws, :bucket).present? ? :amazon : :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
@@ -47,7 +47,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Use Redis for caching in production.
-  config.cache_store = :redis_cache_store, { url: Rails.application.credentials.dig(:redis, :url) }
+  config.cache_store = :redis_cache_store, { url: AppConfig.dig(:redis, :url) }
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque
@@ -59,18 +59,18 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates (password resets, confirmations).
   config.action_mailer.default_url_options = {
-    host: Rails.application.credentials.dig(:smtp, :domain),
+    host: AppConfig.dig(:smtp, :domain),
     protocol: "https"
   }
 
-  # Outgoing SMTP server settings reading from credentials.
+  # Outgoing SMTP server settings reading from AppConfig facade.
   config.action_mailer.smtp_settings = {
-    address:              Rails.application.credentials.dig(:smtp, :address),
-    port:                 Rails.application.credentials.dig(:smtp, :port),
-    domain:               Rails.application.credentials.dig(:smtp, :domain),
-    user_name:            Rails.application.credentials.dig(:smtp, :user_name),
-    password:             Rails.application.credentials.dig(:smtp, :password),
-    authentication:       Rails.application.credentials.dig(:smtp, :authentication),
+    address:              AppConfig.dig(:smtp, :address),
+    port:                 AppConfig.dig(:smtp, :port),
+    domain:               AppConfig.dig(:smtp, :domain),
+    user_name:            AppConfig.dig(:smtp, :user_name),
+    password:             AppConfig.dig(:smtp, :password),
+    authentication:       AppConfig.dig(:smtp, :authentication),
     enable_starttls_auto: true,
     open_timeout:         5,
     read_timeout:         5

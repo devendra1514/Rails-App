@@ -2,17 +2,27 @@ default: &default
   adapter: postgresql
   encoding: unicode
   max_connections: <%= ENV["DB_POOL"].presence || ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  host: <%= Rails.application.credentials.dig(:database, :host) %>
-  port: <%= Rails.application.credentials.dig(:database, :port) %>
-  username: <%= Rails.application.credentials.dig(:database, :username) %>
-  password: <%= Rails.application.credentials.dig(:database, :password) %>
-  database: <%= Rails.application.credentials.dig(:database, :name) %>
 
 development:
   <<: *default
+  host: <%= AppConfig.for(:development).dig(:database, :host) %>
+  port: <%= AppConfig.for(:development).dig(:database, :port) %>
+  username: <%= AppConfig.for(:development).dig(:database, :username) %>
+  password: <%= AppConfig.for(:development).dig(:database, :password) %>
+  database: <%= AppConfig.for(:development).dig(:database, :name) %>
 
 test:
   <<: *default
+  host: <%= AppConfig.for(:test).dig(:database, :host) %>
+  port: <%= AppConfig.for(:test).dig(:database, :port) %>
+  username: <%= AppConfig.for(:test).dig(:database, :username) %>
+  password: <%= AppConfig.for(:test).dig(:database, :password) %>
+  database: <%= AppConfig.for(:test).dig(:database, :name) %>
 
 production:
   <<: *default
+  host: <%= AppConfig.for(:production).dig(:database, :host) %>
+  port: <%= AppConfig.for(:production).dig(:database, :port) %>
+  username: <%= AppConfig.for(:production).dig(:database, :username) %>
+  password: <%= AppConfig.for(:production).dig(:database, :password) %>
+  database: <%= AppConfig.for(:production).dig(:database, :name) %>

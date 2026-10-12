@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: -> { Rails.application.credentials.dig(:smtp, :from_email) }
+  default from: -> { AppConfig.dig(:mailer, :sender_email) }
   layout "mailer"
 end

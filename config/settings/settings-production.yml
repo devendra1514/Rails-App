@@ -1,0 +1,28 @@
+# Production environment configuration
+redis:
+  url: <%= ENV["REDIS_URL"].presence || Rails.application&.credentials&.dig(:redis, :url) %>
+
+database:
+  host: <%= ENV["DATABASE_HOST"].presence || Rails.application&.credentials&.dig(:database, :host) %>
+  port: <%= ENV["DATABASE_PORT"].presence || Rails.application&.credentials&.dig(:database, :port) || 5432 %>
+  username: <%= ENV["DATABASE_USERNAME"].presence || Rails.application&.credentials&.dig(:database, :username) %>
+  password: <%= ENV["DATABASE_PASSWORD"].presence || Rails.application&.credentials&.dig(:database, :password) %>
+  name: <%= ENV["DATABASE_NAME"].presence || Rails.application&.credentials&.dig(:database, :name) %>
+
+smtp:
+  address: <%= ENV["SMTP_ADDRESS"].presence || Rails.application&.credentials&.dig(:smtp, :address) %>
+  port: <%= ENV["SMTP_PORT"].presence || Rails.application&.credentials&.dig(:smtp, :port) %>
+  domain: <%= ENV["SMTP_DOMAIN"].presence || Rails.application&.credentials&.dig(:smtp, :domain) %>
+  user_name: <%= ENV["SMTP_USER_NAME"].presence || Rails.application&.credentials&.dig(:smtp, :user_name) %>
+  password: <%= ENV["SMTP_PASSWORD"].presence || Rails.application&.credentials&.dig(:smtp, :password) %>
+  authentication: <%= ENV["SMTP_AUTHENTICATION"].presence || Rails.application&.credentials&.dig(:smtp, :authentication) %>
+
+mailer:
+  sender_email: <%= ENV["MAILER_SENDER_EMAIL"].presence || Rails.application&.credentials&.dig(:mailer, :sender_email) || Rails.application&.credentials&.dig(:smtp, :from_email) %>
+
+aws:
+  access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"].presence || Rails.application&.credentials&.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"].presence || Rails.application&.credentials&.dig(:aws, :secret_access_key) %>
+  region: <%= ENV["AWS_REGION"].presence || Rails.application&.credentials&.dig(:aws, :region) || "us-east-1" %>
+  bucket: <%= ENV["AWS_BUCKET"].presence || Rails.application&.credentials&.dig(:aws, :bucket) %>
+  endpoint: <%= ENV["AWS_ENDPOINT"].presence || Rails.application&.credentials&.dig(:aws, :endpoint) %>

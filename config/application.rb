@@ -18,6 +18,8 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative "../lib/app_config"
+
 module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -49,3 +51,6 @@ module App
     config.action_mailer.deliver_later_queue_name = :mailers
   end
 end
+
+# Fail-fast validation of base application configuration on boot
+AppConfig.dig!(:app_name)

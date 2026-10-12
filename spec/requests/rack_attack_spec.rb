@@ -12,6 +12,7 @@ RSpec.describe "Rack::Attack", type: :request do
   end
 
   after do
+    Rack::Attack.throttles.delete("test_throttle")
     Rack::Attack.reset!
     Rack::Attack.enabled = false
   end

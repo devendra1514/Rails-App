@@ -1,0 +1,13 @@
+# Development environment configuration
+redis:
+  url: <%= ENV["REDIS_URL"].presence || "redis://localhost:6379/0" %>
+
+database:
+  host: <%= ENV["DATABASE_HOST"].presence || "localhost" %>
+  port: <%= ENV["DATABASE_PORT"].presence || 5432 %>
+  username: <%= ENV["DATABASE_USERNAME"].presence || "postgres" %>
+  password: <%= ENV["DATABASE_PASSWORD"].presence || "postgres" %>
+  name: "app_development"
+
+mailer:
+  sender_email: "support@example.com"

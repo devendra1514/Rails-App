@@ -1,15 +1,17 @@
 default: &default
   adapter: redis
-  url: <%= Rails.application.credentials.dig(:redis, :url) %>
 
 development:
   <<: *default
+  url: <%= AppConfig.for(:development).dig(:redis, :url) %>
   channel_prefix: app_development
 
 test:
   <<: *default
+  url: <%= AppConfig.for(:test).dig(:redis, :url) %>
   channel_prefix: app_test
 
 production:
   <<: *default
+  url: <%= AppConfig.for(:production).dig(:redis, :url) %>
   channel_prefix: app_production
