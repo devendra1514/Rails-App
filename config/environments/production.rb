@@ -22,7 +22,7 @@ Rails.application.configure do
   # config.asset_host = "http://assets.example.com"
 
   # Store uploaded files on cloud storage in production (see config/storage.yml).
-  config.active_storage.service = AppConfig.dig(:aws, :bucket).present? ? :amazon : :local
+  config.active_storage.service = :amazon
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
