@@ -59,6 +59,19 @@ RSpec.describe AppConfig do
         described_class.reload!
       end
     end
+
+    it "respects ENV['APP_HOST'] override for production settings when set" do
+      begin
+        original_app_host = ENV["APP_HOST"]
+        ENV["APP_HOST"] = "app.example.com"
+        described_class.reload!
+
+        expect(described_class.for(:production).dig(:app_host)).to eq("app.example.com")
+      ensure
+        ENV["APP_HOST"] = original_app_host
+        described_class.reload!
+      end
+    end
   end
 
   describe ".env" do

@@ -59,7 +59,7 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates (password resets, confirmations).
   config.action_mailer.default_url_options = {
-    host: AppConfig.dig(:smtp, :domain),
+    host: AppConfig.dig(:app_host),
     protocol: "https"
   }
 

@@ -1,4 +1,6 @@
 # Production environment configuration
+app_host: <%= ENV["APP_HOST"].presence || Rails.application&.credentials&.dig(:app_host) %>
+
 redis:
   url: <%= ENV["REDIS_URL"].presence || Rails.application&.credentials&.dig(:redis, :url) %>
 
