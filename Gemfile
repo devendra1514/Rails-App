@@ -75,6 +75,8 @@ group :development, :test do
   # Testing framework & fixtures
   gem "rspec-rails", "~> 7.1"
   gem "factory_bot_rails"
+  gem "faker"
+  gem "shoulda-matchers"
 
   # Detect N+1 queries in development and test [https://github.com/charkost/prosopite]
   gem "prosopite"

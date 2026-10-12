@@ -8,8 +8,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # that will avoid rails generators crashing because migrations haven't been run yet
 # return unless Rails.env.test?
 require 'rspec/rails'
-# Enable Sidekiq testing mode (jobs enqueued in-memory without Redis)
-Sidekiq.testing!(:fake)
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -26,7 +24,7 @@ Sidekiq.testing!(:fake)
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -63,8 +61,6 @@ RSpec.configure do |config|
   # /spec/models would pull in the same behaviour as `type: :model` but this
   # behaviour is considered legacy and will be removed in a future version.
   #
-  # Include FactoryBot syntax methods (build, create, attributes_for)
-  config.include FactoryBot::Syntax::Methods
 
   # Automatically infer spec type based on directory (spec/models, spec/requests, etc.)
   config.infer_spec_type_from_file_location!
@@ -73,18 +69,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  # Disable Rack::Attack by default in test suite
-  Rack::Attack.enabled = false
-
-  # Auto-detect N+1 queries in tests via Prosopite
-  if defined?(Prosopite)
-    config.before(:each) do |example|
-      Prosopite.scan unless example.metadata[:prosopite] == false
-    end
-
-    config.after(:each) do |example|
-      Prosopite.finish unless example.metadata[:prosopite] == false
-    end
-  end
 end
