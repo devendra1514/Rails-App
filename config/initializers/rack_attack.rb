@@ -33,19 +33,16 @@ class Rack::Attack
     req.ip
   end
 
-  # --- Future Endpoint-Specific Throttle Examples ---
-  #
-  # Example: Throttle POST requests to login endpoints by IP (e.g., 20 attempts per minute)
-  # throttle("logins/ip", limit: 20, period: 1.minute) do |req|
-  #   req.ip if req.path == "/users/sign_in" && req.post?
-  # end
-  #
-  # Example: Throttle POST requests to login endpoints by email (e.g., 5 attempts per 20 seconds)
-  # throttle("logins/email", limit: 5, period: 20.seconds) do |req|
-  #   if req.path == "/users/sign_in" && req.post?
-  #     req.params.dig("user", "email").to_s.downcase.strip.presence
-  #   end
-  # end
+  # Strict throttle on Admin login attempts to stop brute force & credential stuffing
+  throttle("admin_logins/ip", limit: 5, period: 20.seconds) do |req|
+    req.ip if req.path == "/admin/login" && req.post?
+  end
+
+  throttle("admin_logins/email", limit: 5, period: 1.minute) do |req|
+    if req.path == "/admin/login" && req.post?
+      req.params.dig("admin", "email").to_s.downcase.strip.presence
+    end
+  end
 
   ### Custom Responses ###
 
