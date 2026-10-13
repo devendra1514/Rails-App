@@ -58,6 +58,13 @@ gem "strong_migrations"
 # Fast, lightweight pagination [https://github.com/ddnexus/pagy]
 gem "pagy"
 
+# Authentication framework [https://github.com/heartcombo/devise]
+gem "devise", ">= 5.0.3"
+
+# Administration framework (v4 with Propshaft-compatible precompiled assets) [https://activeadmin.info/]
+gem "activeadmin", ">= 4.0.0.beta21"
+gem "activeadmin_assets"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
