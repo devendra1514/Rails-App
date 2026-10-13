@@ -2,11 +2,18 @@ require "sidekiq/web"
 require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
+  devise_for :admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  mount Sidekiq::Web => "/sidekiq"
+  # Secure Sidekiq Web UI behind Admin Devise session (resolves SEC-01)
+  authenticate :admin do
+    mount Sidekiq::Web => "/admin/sidekiq"
+  end
+
+  root to: redirect("/admin")
 
   # Preview sent emails in browser during development
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development? && defined?(LetterOpenerWeb)
