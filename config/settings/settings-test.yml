@@ -7,7 +7,7 @@ database:
   port: <%= ENV["DATABASE_PORT"].presence || 5432 %>
   username: <%= ENV["DATABASE_USERNAME"].presence || "postgres" %>
   password: <%= ENV["DATABASE_PASSWORD"].presence || "postgres" %>
-  name: "app_test"
+  name: <%= ENV["DATABASE_NAME"].presence || "app_test" %>
 
 mailer:
   sender_email: "support@example.com"

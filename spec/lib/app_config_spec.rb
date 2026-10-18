@@ -9,9 +9,11 @@ RSpec.describe AppConfig do
     end
 
     it "returns nested values for active environment" do
+      expected_host = ENV["DATABASE_HOST"].presence || "localhost"
+      expected_redis = ENV["REDIS_URL"].presence || "redis://localhost:6379/0"
       expect(described_class.dig(:database, :name)).to eq("app_test")
-      expect(described_class.dig(:database, :host)).to eq("localhost")
-      expect(described_class.dig(:redis, :url)).to eq("redis://localhost:6379/0")
+      expect(described_class.dig(:database, :host)).to eq(expected_host)
+      expect(described_class.dig(:redis, :url)).to eq(expected_redis)
     end
 
     it "returns nil for non-existent keys" do
@@ -34,15 +36,17 @@ RSpec.describe AppConfig do
   describe ".for" do
     it "loads development environment settings" do
       dev_config = described_class.for(:development)
+      expected_host = ENV["DATABASE_HOST"].presence || "localhost"
       expect(dev_config.dig(:database, :name)).to eq("app_development")
-      expect(dev_config.dig(:database, :host)).to eq("localhost")
+      expect(dev_config.dig(:database, :host)).to eq(expected_host)
       expect(dev_config.dig(:app_name)).to eq("App")
     end
 
     it "loads test environment settings" do
       test_config = described_class.for(:test)
+      expected_host = ENV["DATABASE_HOST"].presence || "localhost"
       expect(test_config.dig(:database, :name)).to eq("app_test")
-      expect(test_config.dig(:database, :host)).to eq("localhost")
+      expect(test_config.dig(:database, :host)).to eq(expected_host)
       expect(test_config.dig(:app_name)).to eq("App")
     end
 

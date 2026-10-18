@@ -91,4 +91,8 @@ Rails.application.configure do
       Prosopite.raise = false
     end
   end
+
+  # Allow web console and requests from Docker network bridge
+  config.web_console.permissions = "172.0.0.0/8" if defined?(WebConsole)
+  config.hosts.clear
 end
