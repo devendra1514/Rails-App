@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+# Clear stale server PID left by ungraceful container shutdown
+# Only remove when starting the server so background workers or test runners don't interfere
+if [[ "$*" == *"server"* || "$*" == *"rails s"* || "$*" == *"bin/dev"* ]]; then
+  if [ -f /rails/tmp/pids/server.pid ]; then
+    rm -f /rails/tmp/pids/server.pid
+  fi
+fi
+
+exec "$@"

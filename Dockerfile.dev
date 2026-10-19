@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1
+ARG RUBY_VERSION=3.3.6
+FROM docker.io/library/ruby:$RUBY_VERSION-slim
+
+# Build-time arguments to match host user permissions (default to 1000:1000)
+ARG UID=1000
+ARG GID=1000
+
+# Install system dependencies required for gem compilation and Rails dev
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+      build-essential \
+      git \
+      libpq-dev \
+      libvips \
+      libyaml-dev \
+      pkg-config \
+      curl \
+      postgresql-client \
+      libjemalloc2 && \
+    ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+# Set development environment
+ENV RAILS_ENV="development" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_BIN="/usr/local/bundle/bin" \
+    GEM_HOME="/usr/local/bundle" \
+    HISTFILE="/rails/tmp/.bash_history" \
+    TERM="xterm-256color" \
+    LD_PRELOAD="/usr/local/lib/libjemalloc.so"
+ENV PATH="/rails/bin:${BUNDLE_BIN}:${PATH}"
+
+# Rails app working directory
+WORKDIR /rails
+
+# Create non-root user matching host UID/GID and pre-create directories
+RUN groupadd --system --gid ${GID} rails && \
+    useradd rails --uid ${UID} --gid ${GID} --create-home --shell /bin/bash && \
+    mkdir -p /rails /usr/local/bundle /rails/tmp/cache /rails/tmp/pids /rails/tmp/sockets /rails/log && \
+    chown -R rails:rails /rails /usr/local/bundle
+
+# Run as non-root developer user
+USER rails:rails
+
+# Configure git safe directory to avoid dubious ownership warnings
+RUN git config --global --add safe.directory '*'
+
+# Copy dependency manifests and install initial bundle for fast startup
+COPY --chown=rails:rails Gemfile Gemfile.lock .ruby-version ./
+RUN gem install bundler:2.6.9 && bundle install
+
+# Copy application entrypoint script
+COPY --chown=rails:rails bin/docker-entrypoint-dev /rails/bin/docker-entrypoint-dev
+
+# Expose default Rails port
+EXPOSE 3000
+
+# Set entrypoint and default command
+ENTRYPOINT ["/rails/bin/docker-entrypoint-dev"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
